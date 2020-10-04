@@ -46,9 +46,11 @@ const getAdvert = () => {
   return newAdvert;
 };
 
-for (let i = 0; i < ADVERT_QUANTITY; i++) {
-  advertList.push(getAdvert());
-}
+const generateAdvertArr = (quantity) => {
+  for (let i = 0; i < quantity; i++) {
+    advertList.push(getAdvert());
+  }
+};
 
 const activeMap = document.querySelector(`.map`);
 activeMap.classList.remove(`map--faded`);
@@ -68,14 +70,10 @@ const createPin = (data) => {
   return pinElement;
 };
 
-const renderPins = (arr) => {
-  const pinsFragment = document.createDocumentFragment();
+const fragment = document.createDocumentFragment();
+generateAdvertArr(ADVERT_QUANTITY);
 
-  for (let i = 0; i < arr.length; i++) {
-    pinsFragment.appendChild(createPin(arr[i]));
-  }
-  pinsList.appendChild(pinsFragment);
-  return pinsFragment;
-};
-
-renderPins(advertList);
+advertList.forEach((pin) => {
+  fragment.appendChild(createPin(pin));
+});
+pinsList.appendChild(fragment);
