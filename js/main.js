@@ -15,23 +15,48 @@ const OFFER_PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 const ADVERT_QUANTITY = 8;
+const PRICE = {
+  min: 10000,
+  max: 100000
+};
+const ROOMS = {
+  min: 1,
+  max: 10
+};
+const GUESTS = {
+  min: 1,
+  max: 15
+};
+const MARK_Y = {
+  min: 130,
+  max: 630
+};
 const advertList = [];
+
+const activeMap = document.querySelector(`.map`);
+activeMap.classList.remove(`map--faded`);
+const pinsList = document.querySelector(`.map__pins`);
+const advertTemplate = document.querySelector(`#pin`).content;
 
 const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min)) + min;
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+const getRoundNum = (num) => Math.round(num / 1000) * 1000;
 
 const getAdvert = () => {
-  let newAdvert = {
+  const MAP_X = getRandomNumber(0, activeMap.offsetWidth);
+  const MAP_Y = getRandomNumber(MARK_Y.min, MARK_Y.max);
+
+  const newAdvert = {
     autor: {
-      avatar: `img/avatars/user0${getRandomNumber(1, 8)}.png`
+      avatar: `img/avatars/user0${getRandomNumber(1, ADVERT_QUANTITY)}.png`
     },
     offer: {
       title: getRandomElement(OFFER_TITLE),
-      address: `${getRandomNumber(100, 500)}, ${getRandomNumber(300, 900)}`,
-      price: `${getRandomNumber(30000, 100000)}`,
+      address: `${MAP_X}, ${MAP_Y}`,
+      price: getRoundNum(getRandomNumber(PRICE.min, PRICE.max)),
       type: getRandomElement(OFFER_TYPE),
-      rooms: `${getRandomNumber(1, 10)}`,
-      guests: `${getRandomNumber(1, 10)}`,
+      rooms: `${getRandomNumber(ROOMS.min, ROOMS.max)}`,
+      guests: `${getRandomNumber(GUESTS.min, GUESTS.max)}`,
       checkin: getRandomElement(OFFER_CHECKIN_CHECKOUT),
       checkout: getRandomElement(OFFER_CHECKIN_CHECKOUT),
       features: OFFER_FEATURES.slice(0, getRandomNumber(0, OFFER_FEATURES.length)),
@@ -39,8 +64,8 @@ const getAdvert = () => {
       photos: getRandomElement(OFFER_PHOTOS)
     },
     location: {
-      x: getRandomNumber(20, 1000),
-      y: getRandomNumber(130, 630)
+      x: MAP_X,
+      y: MAP_Y
     }
   };
   return newAdvert;
@@ -50,22 +75,17 @@ const generateAdvertArr = (quantity) => {
   for (let i = 0; i < quantity; i++) {
     advertList.push(getAdvert());
   }
+  return advertList;
 };
 
-const activeMap = document.querySelector(`.map`);
-activeMap.classList.remove(`map--faded`);
-const pinsList = document.querySelector(`.map__pins`);
-const advertTemplate = document.querySelector(`#pin`).content;
-
-
-const createPin = (data) => {
+const createPin = (pinData) => {
   const pinElement = advertTemplate.cloneNode(true);
   const pinButton = pinElement.querySelector(`.map__pin`);
   const pinPhoto = pinElement.querySelector(`img`);
-
-  pinButton.setAttribute(`style`, `left: ${data.location.x - pinButton.offsetWidth}px; top: ${data.location.y - pinButton.offsetHeight}px;`);
-  pinPhoto.setAttribute(`src`, `${data.offer.photos}`);
-  pinPhoto.setAttribute(`alt`, `${data.offer.title}`);
+  pinButton.style.left = `${pinData.location.x - pinButton.offsetWidth}px`;
+  pinButton.style.top = `${pinData.location.y - pinButton.offsetHeight}px`;
+  pinPhoto.src = `${pinData.offer.photos}`;
+  pinPhoto.alt = `${pinData.offer.title}`;
 
   return pinElement;
 };
