@@ -15,19 +15,19 @@ const OFFER_PHOTOS = [
   `http://o0.github.io/assets/images/tokyo/hotel3.jpg`
 ];
 const ADVERT_QUANTITY = 8;
-const PRICE = {
+const Price = {
   MIN: 10000,
   MAX: 100000
 };
-const ROOMS = {
+const Rooms = {
   MIN: 1,
   MAX: 10
 };
-const GUESTS = {
+const Guests = {
   MIN: 1,
   MAX: 15
 };
-const MARK_Y = {
+const MarkY = {
   MIN: 130,
   MAX: 630
 };
@@ -43,7 +43,7 @@ const getRoundNumber = (num) => Math.round(num / 1000) * 1000;
 
 const getAdvert = () => {
   const mapX = getRandomNumber(0, activeMap.offsetWidth);
-  const mapY = getRandomNumber(MARK_Y.MIN, MARK_Y.MAX);
+  const mapY = getRandomNumber(MarkY.MIN, MarkY.MAX);
 
   return {
     author: {
@@ -52,10 +52,10 @@ const getAdvert = () => {
     offer: {
       title: getRandomElement(OFFER_TITLES),
       address: `${mapX}, ${mapY}`,
-      price: getRoundNumber(getRandomNumber(PRICE.MIN, PRICE.MAX)),
+      price: getRoundNumber(getRandomNumber(Price.MIN, Price.MAX)),
       type: getRandomElement(OFFER_TYPES),
-      rooms: getRandomNumber(ROOMS.MIN, ROOMS.MAX),
-      guests: getRandomNumber(GUESTS.MIN, GUESTS.MAX),
+      rooms: getRandomNumber(Rooms.MIN, Rooms.MAX),
+      guests: getRandomNumber(Guests.MIN, Guests.MAX),
       checkin: getRandomElement(OFFER_CHECKIN_CHECKOUT_TIMES),
       checkout: getRandomElement(OFFER_CHECKIN_CHECKOUT_TIMES),
       features: OFFER_FEATURES.slice(0, getRandomNumber(0, OFFER_FEATURES.length)),
@@ -76,7 +76,6 @@ const generateAdverts = (quantity) => {
   }
   return adverts;
 };
-
 
 const createPin = (pinData) => {
   const pinElement = advertTemplate.cloneNode(true);
