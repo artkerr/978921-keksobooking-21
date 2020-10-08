@@ -122,3 +122,12 @@ mapPin.addEventListener(`mousedown`, (evt) => {
     pinsList.appendChild(fragment);
   }
 });
+
+mapPin.addEventListener(`keydown`, (evt) => {
+  if (evt.key === `Enter`) {
+    setFieldStatus(addFromFieldset, false);
+    setFieldStatus(mapFiltersSelect, false);
+    activeMap.classList.remove(`map--faded`);
+    pinsList.appendChild(fragment);
+  }
+});
