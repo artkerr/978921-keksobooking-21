@@ -42,8 +42,10 @@ const getRandomElement = (items) => items[Math.floor(Math.random() * items.lengt
 const getRoundNumber = (num) => Math.round(num / 1000) * 1000;
 
 const getAdvert = () => {
-  const mapX = getRandomNumber(0, activeMap.offsetWidth);
-  const mapY = getRandomNumber(MarkY.MIN, MarkY.MAX);
+  const location = {
+    x: getRandomNumber(0, activeMap.offsetWidth),
+    y: getRandomNumber(MarkY.MIN, MarkY.MAX)
+  };
 
   return {
     author: {
@@ -51,7 +53,7 @@ const getAdvert = () => {
     },
     offer: {
       title: getRandomElement(OFFER_TITLES),
-      address: `${mapX}, ${mapY}`,
+      address: `${location.x}, ${location.y}`,
       price: getRoundNumber(getRandomNumber(Price.MIN, Price.MAX)),
       type: getRandomElement(OFFER_TYPES),
       rooms: getRandomNumber(Rooms.MIN, Rooms.MAX),
@@ -62,10 +64,7 @@ const getAdvert = () => {
       description: getRandomElement(OFFER_DESCRIPTIONS),
       photos: getRandomElement(OFFER_PHOTOS)
     },
-    location: {
-      x: mapX,
-      y: mapY
-    }
+    location
   };
 };
 
