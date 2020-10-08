@@ -1,10 +1,10 @@
 'use strict';
 
-const OFFER_TITLE = [`Апартаменты-студия`, `Аппартаменты в центре`, `Дом за городом`, `Малокомнатная квартира`, `Многокомнатная квартира`, `Несколькокомнатная квартира`];
-const OFFER_TYPE = [`palace`, `flat`, `house`, `bungalow`];
-const OFFER_CHECKIN_CHECKOUT = [`12:00`, `13:00`, `14:00`];
+const OFFER_TITLES = [`Апартаменты-студия`, `Аппартаменты в центре`, `Дом за городом`, `Малокомнатная квартира`, `Многокомнатная квартира`, `Несколькокомнатная квартира`];
+const OFFER_TYPES = [`palace`, `flat`, `house`, `bungalow`];
+const OFFER_CHECKIN_CHECKOUT_TIMES = [`12:00`, `13:00`, `14:00`];
 const OFFER_FEATURES = [`wifi`, `dishwasher`, `parking`, `washer`, `elevator`, `conditioner`];
-const OFFER_DESCRIPTION = [
+const OFFER_DESCRIPTIONS = [
   `Новостройка расположена в Ценратральном районе, на территории национального парка.`,
   `Охраняемая территория, система контроля управления доступом в т.ч. по смартфону. Есть подземный паркинг.`,
   `Собственная инфраструктура: детский сад, детская площадка, тир, тренажерный зал, бассейн, спортивно-оздоровительный комплекс, собственное футбольное поле, магазины, салоны красоты, сауны, массажный и косметический салоны и т.д.`,
@@ -16,22 +16,21 @@ const OFFER_PHOTOS = [
 ];
 const ADVERT_QUANTITY = 8;
 const PRICE = {
-  min: 10000,
-  max: 100000
+  MIN: 10000,
+  MAX: 100000
 };
 const ROOMS = {
-  min: 1,
-  max: 10
+  MIN: 1,
+  MAX: 10
 };
 const GUESTS = {
-  min: 1,
-  max: 15
+  MIN: 1,
+  MAX: 15
 };
 const MARK_Y = {
-  min: 130,
-  max: 630
+  MIN: 130,
+  MAX: 630
 };
-const advertList = [];
 
 const activeMap = document.querySelector(`.map`);
 activeMap.classList.remove(`map--faded`);
@@ -39,44 +38,45 @@ const pinsList = document.querySelector(`.map__pins`);
 const advertTemplate = document.querySelector(`#pin`).content;
 
 const getRandomNumber = (min, max) => Math.round(Math.random() * (max - min)) + min;
-const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
-const getRoundNum = (num) => Math.round(num / 1000) * 1000;
+const getRandomElement = (items) => items[Math.floor(Math.random() * items.length)];
+const getRoundNumber = (num) => Math.round(num / 1000) * 1000;
 
 const getAdvert = () => {
-  const MAP_X = getRandomNumber(0, activeMap.offsetWidth);
-  const MAP_Y = getRandomNumber(MARK_Y.min, MARK_Y.max);
+  const mapX = getRandomNumber(0, activeMap.offsetWidth);
+  const mapY = getRandomNumber(MARK_Y.MIN, MARK_Y.MAX);
 
-  const newAdvert = {
-    autor: {
+  return {
+    author: {
       avatar: `img/avatars/user0${getRandomNumber(1, ADVERT_QUANTITY)}.png`
     },
     offer: {
-      title: getRandomElement(OFFER_TITLE),
-      address: `${MAP_X}, ${MAP_Y}`,
-      price: getRoundNum(getRandomNumber(PRICE.min, PRICE.max)),
-      type: getRandomElement(OFFER_TYPE),
-      rooms: `${getRandomNumber(ROOMS.min, ROOMS.max)}`,
-      guests: `${getRandomNumber(GUESTS.min, GUESTS.max)}`,
-      checkin: getRandomElement(OFFER_CHECKIN_CHECKOUT),
-      checkout: getRandomElement(OFFER_CHECKIN_CHECKOUT),
+      title: getRandomElement(OFFER_TITLES),
+      address: `${mapX}, ${mapY}`,
+      price: getRoundNumber(getRandomNumber(PRICE.MIN, PRICE.MAX)),
+      type: getRandomElement(OFFER_TYPES),
+      rooms: getRandomNumber(ROOMS.MIN, ROOMS.MAX),
+      guests: getRandomNumber(GUESTS.MIN, GUESTS.MAX),
+      checkin: getRandomElement(OFFER_CHECKIN_CHECKOUT_TIMES),
+      checkout: getRandomElement(OFFER_CHECKIN_CHECKOUT_TIMES),
       features: OFFER_FEATURES.slice(0, getRandomNumber(0, OFFER_FEATURES.length)),
-      description: getRandomElement(OFFER_DESCRIPTION),
+      description: getRandomElement(OFFER_DESCRIPTIONS),
       photos: getRandomElement(OFFER_PHOTOS)
     },
     location: {
-      x: MAP_X,
-      y: MAP_Y
+      x: mapX,
+      y: mapY
     }
   };
-  return newAdvert;
 };
 
-const generateAdvertArr = (quantity) => {
+const generateAdverts = (quantity) => {
+  const adverts = [];
   for (let i = 0; i < quantity; i++) {
-    advertList.push(getAdvert());
+    adverts.push(getAdvert());
   }
-  return advertList;
+  return adverts;
 };
+
 
 const createPin = (pinData) => {
   const pinElement = advertTemplate.cloneNode(true);
@@ -84,16 +84,15 @@ const createPin = (pinData) => {
   const pinPhoto = pinElement.querySelector(`img`);
   pinButton.style.left = `${pinData.location.x - pinButton.offsetWidth}px`;
   pinButton.style.top = `${pinData.location.y - pinButton.offsetHeight}px`;
-  pinPhoto.src = `${pinData.offer.photos}`;
-  pinPhoto.alt = `${pinData.offer.title}`;
+  pinPhoto.src = pinData.offer.photos;
+  pinPhoto.alt = pinData.offer.title;
 
   return pinElement;
 };
 
 const fragment = document.createDocumentFragment();
-generateAdvertArr(ADVERT_QUANTITY);
 
-advertList.forEach((pin) => {
+generateAdverts(ADVERT_QUANTITY).forEach((pin) => {
   fragment.appendChild(createPin(pin));
 });
 pinsList.appendChild(fragment);
