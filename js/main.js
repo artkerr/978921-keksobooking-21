@@ -33,7 +33,6 @@ const MarkY = {
 };
 
 const activeMap = document.querySelector(`.map`);
-activeMap.classList.remove(`map--faded`);
 const pinsList = document.querySelector(`.map__pins`);
 const advertTemplate = document.querySelector(`#pin`).content;
 
@@ -94,3 +93,32 @@ generateAdverts(ADVERT_QUANTITY).forEach((pin) => {
   fragment.appendChild(createPin(pin));
 });
 pinsList.appendChild(fragment);
+
+const mapPin = pinsList.querySelector(`.map__pin--main`);
+const adForm = document.querySelector(`.ad-form`);
+const addFromFieldset = adForm.querySelectorAll(`fieldset`);
+
+const mapFilters = activeMap.querySelector(`.map__filters`);
+const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
+
+const setFieldStatus = (field, bolean) => {
+  if (bolean) {
+    field.forEach((item) => {
+      item.disabled = true;
+    });
+  } else {
+    field.forEach((item) => {
+      item.disabled = false;
+    });
+  }
+};
+
+setFieldStatus(addFromFieldset, true);
+setFieldStatus(mapFiltersSelect, true);
+
+mapPin.addEventListener(`mousedown`, () => {
+  activeMap.classList.remove(`map--faded`);
+
+  setFieldStatus(addFromFieldset, false);
+  setFieldStatus(mapFiltersSelect, false);
+});
