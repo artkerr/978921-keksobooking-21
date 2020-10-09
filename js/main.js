@@ -94,7 +94,7 @@ generateAdverts(ADVERT_QUANTITY).forEach((pin) => {
 
 const mapPin = pinsList.querySelector(`.map__pin--main`);
 const adForm = document.querySelector(`.ad-form`);
-const addFromFieldset = adForm.querySelectorAll(`listset`);
+const addFromFieldset = adForm.querySelectorAll(`fieldset`);
 
 const mapFilters = activeMap.querySelector(`.map__filters`);
 const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
@@ -169,7 +169,7 @@ adTitle.addEventListener(`invalid`, () => {
 const adPrice = adForm.querySelector(`#price`);
 
 adPrice.addEventListener(`invalid`, () => {
-  if (adPrice.validity) {
+  if (adPrice.validity.rangeOverflow) {
     adPrice.setCustomValidity(`Максимальная сумма 1 000 000`);
     adPrice.value = 1000000;
   } else {
