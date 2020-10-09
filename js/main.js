@@ -114,20 +114,95 @@ const setFieldStatus = (list, bolean) => {
 setFieldStatus(addFromFieldset, true);
 setFieldStatus(mapFiltersSelect, true);
 
+const setActivePage = () => {
+  setFieldStatus(addFromFieldset, false);
+  setFieldStatus(mapFiltersSelect, false);
+  adForm.classList.remove(`ad-form--disabled`);
+  activeMap.classList.remove(`map--faded`);
+  pinsList.appendChild(fragment);
+};
+
+const adress = adForm.querySelector(`#address`);
+const mainPin = pinsList.querySelector(`.map__pin--main`);
+const mainPinSize = {
+  width: mainPin.offsetWidth,
+  height: mainPin.offsetHeight
+};
+
+const getPinlocation = (evt) => {
+  const startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  adress.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+  return adress.value;
+};
+
 mapPin.addEventListener(`mousedown`, (evt) => {
   if (evt.which === 1) {
-    setFieldStatus(addFromFieldset, false);
-    setFieldStatus(mapFiltersSelect, false);
-    activeMap.classList.remove(`map--faded`);
-    pinsList.appendChild(fragment);
+    setActivePage();
+    getPinlocation(evt);
   }
 });
 
 mapPin.addEventListener(`keydown`, (evt) => {
   if (evt.key === `Enter`) {
-    setFieldStatus(addFromFieldset, false);
-    setFieldStatus(mapFiltersSelect, false);
-    activeMap.classList.remove(`map--faded`);
-    pinsList.appendChild(fragment);
+    setActivePage();
   }
 });
+
+const adTitle = adForm.querySelector(`#title`);
+
+adTitle.addEventListener(`invalid`, () => {
+  if (adTitle.validity.tooShort) {
+    adTitle.setCustomValidity(`Минимальная длина заголовка — 30 символов`);
+  } else if (adTitle.validity.tooLong) {
+    adTitle.setCustomValidity(`Максимальная длина заголовка — 100 символов`);
+  } else if (adTitle.validity.valueMissing) {
+    adTitle.setCustomValidity(`Заголовок объявления обязателен для заполнения`);
+  } else {
+    adTitle.setCustomValidity(``);
+  }
+});
+
+const adPrice = adForm.querySelector(`#price`);
+
+adPrice.addEventListener(`invalid`, () => {
+  if (adPrice.validity) {
+    adPrice.setCustomValidity(`Максимальная сумма 1 000 000`);
+    adPrice.value = 1000000;
+  } else {
+    adPrice.setCustomValidity(``);
+  }
+});
+
+const adRoomNumber = adForm.querySelector(`#room_number`);
+const roomOptions = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+const adCapacity = adForm.querySelector(`#capacity`);
+const capacityOptions = adCapacity.querySelectorAll(`option`);
+
+capacityOptions.forEach((option) => {
+  option.disabled = true;
+});
+
+const setRooms = (roomsQuantity) => {
+  roomOptions[roomsQuantity].forEach((room) => {
+    capacityOptions.forEach((option) => {
+      if (Number(option.value) === room) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+adRoomNumber.addEventListener(`change`, (evt) => {
+  setRooms(evt.target.value);
+});
+
