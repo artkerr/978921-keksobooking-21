@@ -99,16 +99,10 @@ const addFromFieldset = adForm.querySelectorAll(`fieldset`);
 const mapFilters = activeMap.querySelector(`.map__filters`);
 const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
 
-const setFieldStatus = (list, bolean) => {
-  if (bolean) {
-    list.forEach((item) => {
-      item.disabled = true;
-    });
-  } else {
-    list.forEach((item) => {
-      item.disabled = false;
-    });
-  }
+const setFieldStatus = (list, isDisable) => {
+  list.forEach((item) => {
+    item.disabled = isDisable;
+  });
 };
 
 setFieldStatus(addFromFieldset, true);
@@ -122,27 +116,26 @@ const setActivePage = () => {
   pinsList.appendChild(fragment);
 };
 
-const adress = adForm.querySelector(`#address`);
+const address = adForm.querySelector(`#address`);
 const mainPin = pinsList.querySelector(`.map__pin--main`);
 const mainPinSize = {
   width: mainPin.offsetWidth,
   height: mainPin.offsetHeight
 };
 
-const getPinlocation = (evt) => {
+const getPinLocation = (evt) => {
   const startCoords = {
     x: evt.clientX,
     y: evt.clientY
   };
 
-  adress.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
-  return adress.value;
+  address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
 };
 
 mapPin.addEventListener(`mousedown`, (evt) => {
   if (evt.which === 1) {
     setActivePage();
-    getPinlocation(evt);
+    getPinLocation(evt);
   }
 });
 
@@ -187,16 +180,15 @@ const roomOptions = {
 const adCapacity = adForm.querySelector(`#capacity`);
 const capacityOptions = adCapacity.querySelectorAll(`option`);
 
-capacityOptions.forEach((option) => {
-  option.disabled = true;
-});
-
 const setRooms = (roomsQuantity) => {
+  capacityOptions.forEach((option) => {
+    option.disabled = true;
+  });
+
   roomOptions[roomsQuantity].forEach((room) => {
     capacityOptions.forEach((option) => {
       if (Number(option.value) === room) {
         option.disabled = false;
-        option.selected = true;
       }
     });
   });
