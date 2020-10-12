@@ -200,3 +200,6 @@ adRoomNumber.addEventListener(`change`, (evt) => {
   adCapacity.disabled = false;
 });
 
+if (adCapacity.value > adRoomNumber.value) {
+  adRoomNumber.setCustomValidity(`Выберете количество комнат и гостей`);
+}
