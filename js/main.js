@@ -179,7 +179,6 @@ const roomOptions = {
 };
 const adCapacity = adForm.querySelector(`#capacity`);
 const capacityOptions = adCapacity.querySelectorAll(`option`);
-adCapacity.disabled = true;
 
 const setRooms = (roomsQuantity) => {
   capacityOptions.forEach((option) => {
@@ -198,7 +197,6 @@ const setRooms = (roomsQuantity) => {
 
 adRoomNumber.addEventListener(`change`, (evt) => {
   setRooms(evt.target.value);
-  adCapacity.disabled = false;
 });
 
 if (adCapacity.value > adRoomNumber.value) {
