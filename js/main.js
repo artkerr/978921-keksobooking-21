@@ -190,6 +190,7 @@ const setRooms = (roomsQuantity) => {
     capacityOptions.forEach((option) => {
       if (Number(option.value) === room) {
         option.disabled = false;
+        option.selected = true;
       }
     });
   });
