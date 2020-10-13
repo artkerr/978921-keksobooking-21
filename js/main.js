@@ -33,7 +33,6 @@ const MarkY = {
 };
 
 const activeMap = document.querySelector(`.map`);
-activeMap.classList.remove(`map--faded`);
 const pinsList = document.querySelector(`.map__pins`);
 const advertTemplate = document.querySelector(`#pin`).content;
 
@@ -42,8 +41,10 @@ const getRandomElement = (items) => items[Math.floor(Math.random() * items.lengt
 const getRoundNumber = (num) => Math.round(num / 1000) * 1000;
 
 const getAdvert = () => {
-  const mapX = getRandomNumber(0, activeMap.offsetWidth);
-  const mapY = getRandomNumber(MarkY.MIN, MarkY.MAX);
+  const location = {
+    x: getRandomNumber(0, activeMap.offsetWidth),
+    y: getRandomNumber(MarkY.MIN, MarkY.MAX)
+  };
 
   return {
     author: {
@@ -51,7 +52,7 @@ const getAdvert = () => {
     },
     offer: {
       title: getRandomElement(OFFER_TITLES),
-      address: `${mapX}, ${mapY}`,
+      address: `${location.x}, ${location.y}`,
       price: getRoundNumber(getRandomNumber(Price.MIN, Price.MAX)),
       type: getRandomElement(OFFER_TYPES),
       rooms: getRandomNumber(Rooms.MIN, Rooms.MAX),
@@ -62,10 +63,7 @@ const getAdvert = () => {
       description: getRandomElement(OFFER_DESCRIPTIONS),
       photos: getRandomElement(OFFER_PHOTOS)
     },
-    location: {
-      x: mapX,
-      y: mapY
-    }
+    location
   };
 };
 
@@ -90,8 +88,117 @@ const createPin = (pinData) => {
 };
 
 const fragment = document.createDocumentFragment();
-
 generateAdverts(ADVERT_QUANTITY).forEach((pin) => {
   fragment.appendChild(createPin(pin));
 });
-pinsList.appendChild(fragment);
+
+const mapPin = pinsList.querySelector(`.map__pin--main`);
+const adForm = document.querySelector(`.ad-form`);
+const addFromFieldset = adForm.querySelectorAll(`fieldset`);
+
+const mapFilters = activeMap.querySelector(`.map__filters`);
+const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
+
+const setFieldStatus = (list, isDisable) => {
+  list.forEach((item) => {
+    item.disabled = isDisable;
+  });
+};
+
+setFieldStatus(addFromFieldset, true);
+setFieldStatus(mapFiltersSelect, true);
+
+const setActivePage = () => {
+  setFieldStatus(addFromFieldset, false);
+  setFieldStatus(mapFiltersSelect, false);
+  adForm.classList.remove(`ad-form--disabled`);
+  activeMap.classList.remove(`map--faded`);
+  pinsList.appendChild(fragment);
+};
+
+const address = adForm.querySelector(`#address`);
+const mainPin = pinsList.querySelector(`.map__pin--main`);
+const mainPinSize = {
+  width: mainPin.offsetWidth,
+  height: mainPin.offsetHeight
+};
+
+const getPinLocation = (evt) => {
+  const startCoords = {
+    x: evt.clientX,
+    y: evt.clientY
+  };
+
+  address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+};
+
+mapPin.addEventListener(`mousedown`, (evt) => {
+  if (evt.which === 1) {
+    setActivePage();
+    getPinLocation(evt);
+  }
+});
+
+mapPin.addEventListener(`keydown`, (evt) => {
+  if (evt.key === `Enter`) {
+    setActivePage();
+  }
+});
+
+const adTitle = adForm.querySelector(`#title`);
+
+adTitle.addEventListener(`invalid`, () => {
+  if (adTitle.validity.tooShort) {
+    adTitle.setCustomValidity(`Минимальная длина заголовка — 30 символов`);
+  } else if (adTitle.validity.tooLong) {
+    adTitle.setCustomValidity(`Максимальная длина заголовка — 100 символов`);
+  } else if (adTitle.validity.valueMissing) {
+    adTitle.setCustomValidity(`Заголовок объявления обязателен для заполнения`);
+  } else {
+    adTitle.setCustomValidity(``);
+  }
+});
+
+const adPrice = adForm.querySelector(`#price`);
+
+adPrice.addEventListener(`invalid`, () => {
+  if (adPrice.validity.rangeOverflow) {
+    adPrice.setCustomValidity(`Максимальная сумма 1 000 000`);
+    adPrice.value = 1000000;
+  } else {
+    adPrice.setCustomValidity(``);
+  }
+});
+
+const adRoomNumber = adForm.querySelector(`#room_number`);
+const roomOptions = {
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
+};
+const adCapacity = adForm.querySelector(`#capacity`);
+const capacityOptions = adCapacity.querySelectorAll(`option`);
+
+const setRooms = (roomsQuantity) => {
+  capacityOptions.forEach((option) => {
+    option.disabled = true;
+  });
+
+  roomOptions[roomsQuantity].forEach((room) => {
+    capacityOptions.forEach((option) => {
+      if (Number(option.value) === room) {
+        option.disabled = false;
+        option.selected = true;
+      }
+    });
+  });
+};
+
+adRoomNumber.addEventListener(`change`, (evt) => {
+  setRooms(evt.target.value);
+});
+
+if (adCapacity.value > adRoomNumber.value) {
+  adRoomNumber.setCustomValidity(`Выберете количество комнат и гостей`);
+}
