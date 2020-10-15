@@ -4,6 +4,12 @@
   const adForm = document.querySelector(`.ad-form`);
   const adTitle = adForm.querySelector(`#title`);
 
+  window.setFieldStatus = (list, isDisable) => {
+    list.forEach((item) => {
+      item.disabled = isDisable;
+    });
+  };
+
   adTitle.addEventListener(`invalid`, () => {
     if (adTitle.validity.tooShort) {
       adTitle.setCustomValidity(`Минимальная длина заголовка — 30 символов`);
@@ -27,7 +33,6 @@
     }
   });
 
-  const adRoomNumber = adForm.querySelector(`#room_number`);
   const roomOptions = {
     1: [1],
     2: [1, 2],
@@ -37,7 +42,7 @@
   const adCapacity = adForm.querySelector(`#capacity`);
   const capacityOptions = adCapacity.querySelectorAll(`option`);
 
-  const setRooms = (roomsQuantity) => {
+  window.setRooms = (roomsQuantity) => {
     capacityOptions.forEach((option) => {
       option.disabled = true;
     });
@@ -51,13 +56,5 @@
       });
     });
   };
-
-  adRoomNumber.addEventListener(`change`, (evt) => {
-    setRooms(evt.target.value);
-  });
-
-  if (adCapacity.value > adRoomNumber.value) {
-    adRoomNumber.setCustomValidity(`Выберете количество комнат и гостей`);
-  }
 
 })();
