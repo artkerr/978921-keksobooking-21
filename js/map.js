@@ -7,15 +7,6 @@
   const mapFilters = activeMap.querySelector(`.map__filters`);
   const addFromFieldset = adForm.querySelectorAll(`fieldset`);
   const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
-
-  window.setActivePage = () => {
-    window.setFieldStatus(addFromFieldset, false);
-    window.setFieldStatus(mapFiltersSelect, false);
-    adForm.classList.remove(`ad-form--disabled`);
-    activeMap.classList.remove(`map--faded`);
-    pinsList.appendChild(window.fragment);
-  };
-
   const address = adForm.querySelector(`#address`);
   const mainPin = pinsList.querySelector(`.map__pin--main`);
   const mainPinSize = {
@@ -23,13 +14,21 @@
     height: mainPin.offsetHeight
   };
 
-  window.getPinLocation = (evt) => {
-    const startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
-    };
-
-    address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+  window.map = {
+    setActivePage: () => {
+      window.setFieldStatus(addFromFieldset, false);
+      window.setFieldStatus(mapFiltersSelect, false);
+      adForm.classList.remove(`ad-form--disabled`);
+      activeMap.classList.remove(`map--faded`);
+      pinsList.appendChild(window.fragment);
+    },
+    getPinLocation: (evt) => {
+      const startCoords = {
+        x: evt.clientX,
+        y: evt.clientY
+      };
+      address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+    }
   };
 
 })();

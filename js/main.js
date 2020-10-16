@@ -13,14 +13,14 @@ window.setFieldStatus(mapFiltersSelect, true);
 
 mapPin.addEventListener(`mousedown`, (evt) => {
   if (window.util.isMouseDown) {
-    window.setActivePage();
-    window.getPinLocation(evt);
+    window.map.setActivePage();
+    window.map.getPinLocation(evt);
   }
 });
 
 mapPin.addEventListener(`keydown`, () => {
   if (window.util.isEnterEvt) {
-    window.setActivePage();
+    window.map.setActivePage();
   }
 });
 
