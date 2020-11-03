@@ -14,21 +14,25 @@
     height: mainPin.offsetHeight
   };
 
+  const setActivePage = () => {
+    window.setFieldStatus(addFromFieldset, false);
+    window.setFieldStatus(mapFiltersSelect, false);
+    adForm.classList.remove(`ad-form--disabled`);
+    activeMap.classList.remove(`map--faded`);
+    pinsList.appendChild(window.fragment);
+  };
+
+  const getPinLocation = (evt) => {
+    const startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+    address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+  };
+
   window.map = {
-    setActivePage: () => {
-      window.setFieldStatus(addFromFieldset, false);
-      window.setFieldStatus(mapFiltersSelect, false);
-      adForm.classList.remove(`ad-form--disabled`);
-      activeMap.classList.remove(`map--faded`);
-      pinsList.appendChild(window.fragment);
-    },
-    getPinLocation: (evt) => {
-      const startCoords = {
-        x: evt.clientX,
-        y: evt.clientY
-      };
-      address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
-    }
+    setActivePage,
+    getPinLocation
   };
 
 })();
