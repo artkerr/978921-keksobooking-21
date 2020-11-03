@@ -26,9 +26,14 @@
   };
 
   const updatePinsList = () => {
-
     getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
   };
+
+  const type = document.querySelector(`#housing-type`);
+
+  type.addEventListener(`change`, () => {
+    updatePinsList();
+  });
 
   const successHandler = (pins) => {
     adsList = pins;

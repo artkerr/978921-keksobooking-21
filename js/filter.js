@@ -16,6 +16,7 @@
     }
   };
 
+
   window.filter = {
     typeFilter
   };

@@ -29,5 +29,3 @@ const adRoomNumber = adForm.querySelector(`#room_number`);
 adRoomNumber.addEventListener(`change`, (evt) => {
   window.setRooms(evt.target.value);
 });
-
-
