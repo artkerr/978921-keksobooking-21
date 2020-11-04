@@ -3,6 +3,7 @@
 (() => {
   const MAX_PINS = 5;
   const advertTemplate = document.querySelector(`#pin`).content;
+  const pinsList = document.querySelector(`.map__pins`);
   let adsList = [];
 
   const createPin = (pinData) => {
@@ -23,21 +24,23 @@
     for (let i = 0; i < pins.length; i++) {
       window.fragment.appendChild(createPin(pins[i]));
     }
+    pinsList.appendChild(window.fragment);
   };
 
-  const updatePinsList = () => {
+  window.updatePinsList = () => {
     getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
   };
 
   const type = document.querySelector(`#housing-type`);
 
   type.addEventListener(`change`, () => {
-    updatePinsList();
+    pinsList.innerHTML = ``;
+    window.updatePinsList();
   });
 
   const successHandler = (pins) => {
     adsList = pins;
-    updatePinsList();
+    window.updatePinsList();
   };
 
   const errorHandler = (errorMessage) => {
@@ -45,5 +48,4 @@
   };
 
   window.backend.getAdverts(successHandler, errorHandler);
-
 })();
