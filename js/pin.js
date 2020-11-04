@@ -27,7 +27,7 @@
     pinsList.appendChild(window.fragment);
   };
 
-  window.updatePinsList = () => {
+  const updatePinsList = () => {
     getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
   };
 
@@ -35,17 +35,22 @@
 
   type.addEventListener(`change`, () => {
     pinsList.innerHTML = ``;
-    window.updatePinsList();
+    updatePinsList();
   });
 
   const successHandler = (pins) => {
     adsList = pins;
-    window.updatePinsList();
+    updatePinsList();
   };
 
   const errorHandler = (errorMessage) => {
     window.util.errorHandler(errorMessage);
   };
 
-  window.backend.getAdverts(successHandler, errorHandler);
+  window.pin = {
+    updatePinsList,
+    successHandler,
+    errorHandler
+  };
+
 })();

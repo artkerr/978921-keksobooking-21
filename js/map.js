@@ -19,7 +19,7 @@
     window.setFieldStatus(mapFiltersSelect, false);
     adForm.classList.remove(`ad-form--disabled`);
     activeMap.classList.remove(`map--faded`);
-    window.updatePinsList();
+    window.backend.getAdverts(window.pin.successHandler, window.pin.errorHandler);
   };
 
   const getPinLocation = (evt) => {
