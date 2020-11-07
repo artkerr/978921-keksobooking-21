@@ -25,6 +25,15 @@
       window.fragment.appendChild(createPin(pins[i]));
     }
     pinsList.appendChild(window.fragment);
+
+  };
+
+  const clearPins = function () {
+    let pins = pinsList.querySelectorAll(`.map__pin`);
+    for (let i = 1; i < pins.length; i++) {
+      let pin = pins[i];
+      pin.remove();
+    }
   };
 
   const updatePinsList = () => {
@@ -34,13 +43,15 @@
   const type = document.querySelector(`#housing-type`);
 
   type.addEventListener(`change`, () => {
-    pinsList.innerHTML = ``;
+    clearPins();
     updatePinsList();
   });
 
   const successHandler = (pins) => {
     adsList = pins;
     updatePinsList();
+
+    window.card.renderCardList(adsList);
   };
 
   const errorHandler = (errorMessage) => {
@@ -50,7 +61,7 @@
   window.pin = {
     updatePinsList,
     successHandler,
-    errorHandler
+    errorHandler,
   };
 
 })();
