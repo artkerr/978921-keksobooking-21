@@ -13,7 +13,9 @@ window.setFieldStatus(mapFiltersSelect, true);
 
 mapPin.addEventListener(`mousedown`, (evt) => {
   window.util.isMouseDown(evt, window.map.setActivePage);
-  window.util.isMouseDown(evt, window.map.getPinLocation);
+  window.util.isMouseDown(evt, () => {
+    window.map.getPinLocation(evt);
+  });
 });
 
 mapPin.addEventListener(`keydown`, (evt) => {
