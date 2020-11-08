@@ -2,12 +2,6 @@
 
 (() => {
 
-  const isEnterEvt = (evt, action) => {
-    if (evt.key === `Enter`) {
-      action();
-    }
-  };
-
   const isMouseDown = (evt, action) => {
     if (evt.which === 1) {
       action();
@@ -27,8 +21,8 @@
   };
 
   window.util = {
-    isEnterEvt,
     isMouseDown,
     errorHandler
   };
+
 })();

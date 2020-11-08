@@ -9,6 +9,7 @@
   const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
   const address = adForm.querySelector(`#address`);
   const mainPin = pinsList.querySelector(`.map__pin--main`);
+  const mainPinArrow = 22;
   const mainPinSize = {
     width: mainPin.offsetWidth,
     height: mainPin.offsetHeight
@@ -25,21 +26,20 @@
   const renderPins = (evt) => {
     window.util.isMouseDown(evt, () => {
       setActivePage();
-      window.map.getPinLocation(evt);
+      getPinLocation(mainPin);
     });
   };
 
-  const getPinLocation = (evt) => {
+  const getPinLocation = (el) => {
     const startCoords = {
-      x: evt.clientX,
-      y: evt.clientY
+      x: Math.floor(parseInt(el.style.left, 10) - (mainPinSize.width / 2)),
+      y: Math.floor(parseInt(el.style.top, 10) - (mainPinSize.height / 2) + mainPinArrow)
     };
-    address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
+    address.value = `${startCoords.x}, ${startCoords.y}`;
   };
 
   window.map = {
-    renderPins,
-    getPinLocation
+    renderPins
   };
 
 })();
