@@ -28,7 +28,7 @@
 
   };
 
-  const clearPins = function () {
+  const clearPins = () => {
     let pins = pinsList.querySelectorAll(`.map__pin`);
     for (let i = 1; i < pins.length; i++) {
       let pin = pins[i];
@@ -51,6 +51,7 @@
   const successHandler = (pins) => {
     adsList = pins;
     updatePinsList();
+    window.card.renderCardList(pins[0]);
   };
 
   const errorHandler = (errorMessage) => {
