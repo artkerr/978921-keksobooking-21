@@ -12,12 +12,12 @@ window.setFieldStatus(addFromFieldset, true);
 window.setFieldStatus(mapFiltersSelect, true);
 
 mapPin.addEventListener(`mousedown`, (evt) => {
-  window.util.isMouseDown(evt, window.map.setActivePage());
-  window.util.isMouseDown(evt, window.map.getPinLocation(evt));
+  window.util.isMouseDown(evt, window.map.setActivePage);
+  window.util.isMouseDown(evt, window.map.getPinLocation);
 });
 
 mapPin.addEventListener(`keydown`, (evt) => {
-  window.util.isEnterEvt(evt, window.map.setActivePage());
+  window.util.isEnterEvt(evt, window.map.setActivePage);
 });
 
 const adRoomNumber = adForm.querySelector(`#room_number`);
