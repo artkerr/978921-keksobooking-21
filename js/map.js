@@ -27,6 +27,7 @@
     window.util.isMouseDown(evt, () => {
       setActivePage();
       getPinLocation(mainPin);
+      mainPin.removeEventListener(`click`, window.map.renderPins);
     });
   };
 
