@@ -50,8 +50,6 @@
   const successHandler = (pins) => {
     adsList = pins;
     updatePinsList();
-
-    window.card.renderCardList(adsList);
   };
 
   const errorHandler = (errorMessage) => {
