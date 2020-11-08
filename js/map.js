@@ -22,6 +22,13 @@
     window.backend.getAdverts(window.pin.successHandler, window.pin.errorHandler);
   };
 
+  const renderPins = (evt) => {
+    window.util.isMouseDown(evt, () => {
+      setActivePage();
+      window.map.getPinLocation(evt);
+    });
+  };
+
   const getPinLocation = (evt) => {
     const startCoords = {
       x: evt.clientX,
@@ -31,7 +38,7 @@
   };
 
   window.map = {
-    setActivePage,
+    renderPins,
     getPinLocation
   };
 
