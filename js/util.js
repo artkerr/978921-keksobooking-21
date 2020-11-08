@@ -1,6 +1,17 @@
 'use strict';
 
 (() => {
+  const isEscEvt = (evt, action) => {
+    if (evt.key === `Escape`) {
+      action();
+    }
+  };
+
+  const isEnterEvt = (evt, action) => {
+    if (evt.key === `Enter`) {
+      action();
+    }
+  };
 
   const isMouseDown = (evt, action) => {
     if (evt.which === 1) {
@@ -21,6 +32,8 @@
   };
 
   window.util = {
+    isEscEvt,
+    isEnterEvt,
     isMouseDown,
     errorHandler
   };
