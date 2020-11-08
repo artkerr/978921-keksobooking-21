@@ -37,6 +37,7 @@
   };
 
   const updatePinsList = () => {
+    clearPins();
     getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
   };
 
