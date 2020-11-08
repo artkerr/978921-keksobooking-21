@@ -11,18 +11,7 @@ const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
 window.setFieldStatus(addFromFieldset, true);
 window.setFieldStatus(mapFiltersSelect, true);
 
-mapPin.addEventListener(`mousedown`, (evt) => {
-  if (window.util.isMouseDown) {
-    window.map.setActivePage();
-    window.map.getPinLocation(evt);
-  }
-});
-
-mapPin.addEventListener(`keydown`, () => {
-  if (window.util.isEnterEvt) {
-    window.map.setActivePage();
-  }
-});
+mapPin.addEventListener(`click`, window.map.renderPins);
 
 const adRoomNumber = adForm.querySelector(`#room_number`);
 

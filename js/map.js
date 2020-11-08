@@ -9,26 +9,38 @@
   const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
   const address = adForm.querySelector(`#address`);
   const mainPin = pinsList.querySelector(`.map__pin--main`);
+  const mainPinArrow = 22;
   const mainPinSize = {
     width: mainPin.offsetWidth,
     height: mainPin.offsetHeight
   };
 
+  const setActivePage = () => {
+    window.setFieldStatus(addFromFieldset, false);
+    window.setFieldStatus(mapFiltersSelect, false);
+    adForm.classList.remove(`ad-form--disabled`);
+    activeMap.classList.remove(`map--faded`);
+    window.backend.getAdverts(window.pin.successHandler, window.pin.errorHandler);
+  };
+
+  const renderPins = (evt) => {
+    window.util.isMouseDown(evt, () => {
+      setActivePage();
+      getPinLocation(mainPin);
+      mainPin.removeEventListener(`click`, window.map.renderPins);
+    });
+  };
+
+  const getPinLocation = (el) => {
+    const startCoords = {
+      x: Math.floor(parseInt(el.style.left, 10) - (mainPinSize.width / 2)),
+      y: Math.floor(parseInt(el.style.top, 10) - (mainPinSize.height / 2) + mainPinArrow)
+    };
+    address.value = `${startCoords.x}, ${startCoords.y}`;
+  };
+
   window.map = {
-    setActivePage: () => {
-      window.setFieldStatus(addFromFieldset, false);
-      window.setFieldStatus(mapFiltersSelect, false);
-      adForm.classList.remove(`ad-form--disabled`);
-      activeMap.classList.remove(`map--faded`);
-      pinsList.appendChild(window.fragment);
-    },
-    getPinLocation: (evt) => {
-      const startCoords = {
-        x: evt.clientX,
-        y: evt.clientY
-      };
-      address.value = `${startCoords.x + (Math.round(mainPinSize.width / 2))}, ${startCoords.y + mainPinSize.height}`;
-    }
+    renderPins
   };
 
 })();
