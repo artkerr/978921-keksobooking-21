@@ -40,7 +40,8 @@
   };
 
   window.map = {
-    renderPins
+    renderPins,
+    getPinLocation
   };
 
 })();
