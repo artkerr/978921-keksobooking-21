@@ -7,8 +7,8 @@
     house: `Дом`,
     palace: `Дворец`
   };
-  const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const map = document.querySelector(`.map`);
+  const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const photoTemplate = document.querySelector(`#photo`).content.querySelector(`img`);
 
   const getFeatures = (cardData, item) => {
@@ -29,7 +29,7 @@
     return fragment;
   };
 
-  const renderCard = (cardData) => {
+  const createCard = (cardData) => {
     const card = cardTemplate.cloneNode(true);
     const avatar = card.querySelector(`.popup__avatar`);
     const title = card.querySelector(`.popup__title`);
@@ -64,16 +64,38 @@
     return card;
   };
 
-  const renderCardList = (card) => {
-    const fragment = document.createDocumentFragment();
+  const closePopup = (evt) => {
+    const popup = map.querySelector(`.popup`);
+    window.util.isMouseDown(evt, () => popup.remove());
+    document.removeEventListener(`keydown`, onEscButton);
+  };
 
-    fragment.appendChild(renderCard(card));
+  const onEscButton = (evt) => {
+    const popup = map.querySelector(`.popup`);
+    window.util.isEscEvt(evt, () => popup.remove());
+    document.removeEventListener(`keydown`, onEscButton);
+  };
+
+  const renderCard = (card) => {
+    const fragment = document.createDocumentFragment();
+    const popup = map.querySelector(`.popup`);
+
+    if (popup) {
+      popup.remove();
+    }
+
+    fragment.appendChild(card);
+    const closeCard = fragment.querySelector(`.popup__close`);
+
+    closeCard.addEventListener(`click`, closePopup);
+    document.addEventListener(`keydown`, onEscButton);
+
     map.appendChild(fragment);
   };
 
-
   window.card = {
-    renderCardList
+    createCard,
+    renderCard
   };
 
 })();

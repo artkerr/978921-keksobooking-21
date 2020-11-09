@@ -33,6 +33,23 @@
     }
   });
 
+  const TypeOptions = {
+    bungalow: 0,
+    flat: 1000,
+    house: 5000,
+    palace: 10000,
+  };
+  const adType = adForm.querySelector(`#type`);
+
+  const setTypePrice = (type) => {
+    adPrice.setAttribute(`min`, TypeOptions[type]);
+    adPrice.setAttribute(`placeholder`, TypeOptions[type]);
+  };
+
+  adType.addEventListener(`change`, (evt) => {
+    setTypePrice(evt.target.value);
+  });
+
   const roomOptions = {
     1: [1],
     2: [1, 2],
@@ -56,5 +73,28 @@
       });
     });
   };
+
+  const adTimeIn = adForm.querySelector(`#timein`);
+  const timeInOptions = adTimeIn.querySelectorAll(`option`);
+  const adTimeOut = adForm.querySelector(`#timeout`);
+  const timeOutOptions = adTimeOut.querySelectorAll(`option`);
+
+  const timeChecker = (evt) => {
+    timeInOptions.forEach((inItem) => {
+      timeOutOptions.forEach((outItem) => {
+        if (evt.target.value === inItem.value && evt.target.value === outItem.value) {
+          inItem.selected = true;
+          outItem.selected = true;
+        }
+      });
+    });
+  };
+
+  adTimeIn.addEventListener(`change`, (evt) => {
+    timeChecker(evt);
+  });
+  adTimeOut.addEventListener(`change`, (evt) => {
+    timeChecker(evt);
+  });
 
 })();

@@ -15,6 +15,10 @@
     pinPhoto.src = pinData.author.avatar;
     pinPhoto.alt = pinData.offer.title;
 
+    pinButton.addEventListener(`click`, () => {
+      window.card.renderCard(window.card.createCard(pinData));
+    });
+
     return pinElement;
   };
 
@@ -51,7 +55,6 @@
   const successHandler = (pins) => {
     adsList = pins;
     updatePinsList();
-    window.card.renderCardList(pins[0]);
   };
 
   const errorHandler = (errorMessage) => {
