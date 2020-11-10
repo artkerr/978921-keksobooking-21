@@ -93,8 +93,67 @@
   adTimeIn.addEventListener(`change`, (evt) => {
     timeChecker(evt);
   });
+
   adTimeOut.addEventListener(`change`, (evt) => {
     timeChecker(evt);
   });
 
+  const mainContent = document.querySelector(`main`);
+
+  const closePopup = (evt, popup) => {
+    window.util.isMouseDown(evt, () => popup.remove());
+  };
+
+  const onEscButton = (evt, popup) => {
+    window.util.isEscEvt(evt, () => popup.remove());
+    document.removeEventListener(`keydown`, onSuccessEscButton);
+  };
+
+  const closeSuccessPopup = (evt) => {
+    const popup = mainContent.querySelector(`.success`);
+    closePopup(evt, popup);
+  };
+
+  const onSuccessEscButton = (evt) => {
+    const popup = mainContent.querySelector(`.success`);
+    onEscButton(evt, popup);
+  };
+
+  const closeErrorPopup = (evt) => {
+    const popup = mainContent.querySelector(`.error`);
+    closePopup(evt, popup);
+  };
+
+  const onErrorEscButton = (evt) => {
+    const popup = mainContent.querySelector(`.error`);
+    onEscButton(evt, popup);
+  };
+
+  const onSuccess = () => {
+    const successTemplate = document.querySelector(`#success`).content.querySelector(`.success`);
+    const successMessage = successTemplate.cloneNode(true);
+
+    mainContent.appendChild(successMessage);
+    adForm.reset();
+
+    document.addEventListener(`keydown`, onSuccessEscButton);
+    successMessage.addEventListener(`click`, closeSuccessPopup);
+  };
+
+  const onError = () => {
+    const errorTemplate = document.querySelector(`#error`).content.querySelector(`.error`);
+    const errorMessage = errorTemplate.cloneNode(true);
+
+    mainContent.appendChild(errorMessage);
+    errorMessage.addEventListener(`click`, closeErrorPopup);
+    document.addEventListener(`keydown`, onErrorEscButton);
+  };
+
+  adForm.addEventListener(`submit`, (evt) => {
+    window.backend.sendUserData(new FormData(adForm), onSuccess, onError);
+    evt.preventDefault();
+  });
+
+  const resetButton = adForm.querySelector(`.ad-form__reset`);
+  resetButton.addEventListener(`click`, adForm.reset());
 })();
