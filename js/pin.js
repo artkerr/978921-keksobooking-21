@@ -42,19 +42,19 @@
 
   const updatePinsList = () => {
     clearPins();
-    getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
+    getPinsList(adsList.filter(window.filter.applyFilter).slice(0, MAX_PINS));
   };
 
-  const type = document.querySelector(`#housing-type`);
+  const select = document.querySelector(`.map__filters`);
 
-  type.addEventListener(`change`, () => {
+  select.addEventListener(`change`, () => {
     clearPins();
     updatePinsList();
   });
 
   const successHandler = (pins) => {
     adsList = pins;
-    updatePinsList();
+    window.debounce(updatePinsList);
   };
 
   const errorHandler = (errorMessage) => {
@@ -64,7 +64,7 @@
   window.pin = {
     updatePinsList,
     successHandler,
-    errorHandler,
+    errorHandler
   };
 
 })();

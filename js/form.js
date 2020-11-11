@@ -107,6 +107,7 @@
   const onEscButton = (evt, popup) => {
     window.util.isEscEvt(evt, () => popup.remove());
     document.removeEventListener(`keydown`, onSuccessEscButton);
+    document.removeEventListener(`keydown`, onErrorEscButton);
   };
 
   const closeSuccessPopup = (evt) => {
@@ -161,9 +162,7 @@
     window.map.getPinLocation(mainPin);
   };
 
-  const resetButton = adForm.querySelector(`.ad-form__reset`);
-
-  resetButton.addEventListener(`click`, (evt) => {
+  adForm.querySelector(`.ad-form__reset`).addEventListener(`click`, (evt) => {
     evt.preventDefault();
     clearForm();
   });
