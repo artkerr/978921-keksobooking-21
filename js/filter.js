@@ -13,7 +13,7 @@
   const features = filter.querySelector(`#housing-features`);
 
   const typeFilter = (ads) => {
-    return type.value === `any` ? true : type.value === ads.offer.type; 
+    return type.value === `any` ? true : type.value === ads.offer.type;
   };
 
   const priceFilter = (ads) => {
