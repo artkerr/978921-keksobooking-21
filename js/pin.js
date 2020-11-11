@@ -49,12 +49,12 @@
 
   select.addEventListener(`change`, () => {
     clearPins();
-    updatePinsList();
+    window.debounce(updatePinsList);
   });
 
   const successHandler = (pins) => {
     adsList = pins;
-    window.debounce(updatePinsList);
+    updatePinsList();
   };
 
   const errorHandler = (errorMessage) => {
