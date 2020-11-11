@@ -107,6 +107,7 @@
   const onEscButton = (evt, popup) => {
     window.util.isEscEvt(evt, () => popup.remove());
     document.removeEventListener(`keydown`, onSuccessEscButton);
+    document.removeEventListener(`keydown`, onErrorEscButton);
   };
 
   const closeSuccessPopup = (evt) => {
