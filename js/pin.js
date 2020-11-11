@@ -3,8 +3,7 @@
 (() => {
   const MAX_PINS = 5;
   const advertTemplate = document.querySelector(`#pin`).content;
-  const map = document.querySelector(`.map`);
-  const pinsList = map.querySelector(`.map__pins`);
+  const pinsList = document.querySelector(`.map__pins`);
   let adsList = [];
 
   const createPin = (pinData) => {
@@ -46,7 +45,7 @@
     getPinsList(adsList.filter(window.filter.applyFilter).slice(0, MAX_PINS));
   };
 
-  const select = map.querySelectorAll(`.map__filters`);
+  const select = document.querySelector(`.map__filters`);
 
   select.addEventListener(`change`, () => {
     clearPins();
@@ -65,7 +64,7 @@
   window.pin = {
     updatePinsList,
     successHandler,
-    errorHandler,
+    errorHandler
   };
 
 })();
