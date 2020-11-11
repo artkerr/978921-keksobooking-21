@@ -35,32 +35,17 @@
   };
 
   const roomsFilter = (ads) => {
-    if (rooms.value === `any`) {
-      return true;
-    } else {
-      return parseInt(rooms.value, 10) === ads.offer.rooms;
-    }
+    return rooms.value === `any` ? true : parseInt(rooms.value, 10) === ads.offer.rooms;
   };
 
   const questsFilter = (ads) => {
-    if (quests.value === `any`) {
-      return true;
-    } else {
-      return parseInt(quests.value, 10) === ads.offer.guests;
-    }
+    return quests.value === `any` ? true : parseInt(quests.value, 10) === ads.offer.quests;
   };
 
   const featuresFilter = (ads) => {
-    const checkedInput = features.querySelectorAll(`.map__checkbox:checked`);
-    const checkedInputArr = [];
-
-    checkedInput.forEach((item) => {
-      checkedInputArr.push(item.value);
-    });
-
-    return checkedInputArr.every((item) => {
-      return ads.offer.features.includes(item);
-    });
+    return Array.from(features.querySelectorAll(`.map__checkbox:checked`))
+      .map((item) => item.value)
+      .every((item) => ads.offer.features.includes(item));
   };
 
   const applyFilter = (ads) => {
