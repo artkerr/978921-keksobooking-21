@@ -161,9 +161,7 @@
     window.map.getPinLocation(mainPin);
   };
 
-  const resetButton = adForm.querySelector(`.ad-form__reset`);
-
-  resetButton.addEventListener(`click`, (evt) => {
+  adForm.querySelector(`.ad-form__reset`).addEventListener(`click`, (evt) => {
     evt.preventDefault();
     clearForm();
   });
