@@ -134,7 +134,7 @@
     const successMessage = successTemplate.cloneNode(true);
 
     mainContent.appendChild(successMessage);
-    adForm.reset();
+    clearForm();
 
     document.addEventListener(`keydown`, onSuccessEscButton);
     successMessage.addEventListener(`click`, closeSuccessPopup);
@@ -154,6 +154,17 @@
     evt.preventDefault();
   });
 
+  const mainPin = document.querySelector(`.map__pin--main`);
+
+  const clearForm = () => {
+    adForm.reset();
+    window.map.getPinLocation(mainPin);
+  };
+
   const resetButton = adForm.querySelector(`.ad-form__reset`);
-  resetButton.addEventListener(`click`, adForm.reset());
+
+  resetButton.addEventListener(`click`, (evt) => {
+    evt.preventDefault();
+    clearForm();
+  });
 })();
