@@ -3,7 +3,8 @@
 (() => {
   const MAX_PINS = 5;
   const advertTemplate = document.querySelector(`#pin`).content;
-  const pinsList = document.querySelector(`.map__pins`);
+  const map = document.querySelector(`.map`);
+  const pinsList = map.querySelector(`.map__pins`);
   let adsList = [];
 
   const createPin = (pinData) => {
@@ -42,14 +43,14 @@
 
   const updatePinsList = () => {
     clearPins();
-    getPinsList(adsList.filter(window.filter.typeFilter).slice(0, MAX_PINS));
+    getPinsList(adsList.filter(window.filter.applyFilter).slice(0, MAX_PINS));
   };
 
-  const type = document.querySelector(`#housing-type`);
+  const select = map.querySelectorAll(`.map__filters`);
 
-  type.addEventListener(`change`, () => {
+  select.addEventListener(`change`, () => {
     clearPins();
-    updatePinsList();
+    window.debounce(updatePinsList);
   });
 
   const successHandler = (pins) => {
