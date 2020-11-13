@@ -9,6 +9,7 @@ const StatusCode = {
   OK: 200
 };
 
+
 const getAdverts = (onLoad, onError) => {
   const xhr = new XMLHttpRequest();
   xhr.responseType = `json`;

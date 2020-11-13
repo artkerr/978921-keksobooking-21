@@ -15,8 +15,8 @@ const mainPinSize = {
 };
 
 const setActivePage = () => {
-  window.setFieldStatus(addFromFieldset, false);
-  window.setFieldStatus(mapFiltersSelect, false);
+  window.form.setFieldStatus(addFromFieldset, false);
+  window.form.setFieldStatus(mapFiltersSelect, false);
   adForm.classList.remove(`ad-form--disabled`);
   activeMap.classList.remove(`map--faded`);
   window.backend.getAdverts(window.pin.successHandler, window.pin.errorHandler);
@@ -33,9 +33,15 @@ const renderPins = (evt) => {
 const getPinLocation = (el) => {
   const startCoords = {
     x: Math.floor(parseInt(el.style.left, 10) - (mainPinSize.width / 2)),
-    y: Math.floor(parseInt(el.style.top, 10) - (mainPinSize.height / 2) + mainPinArrow)
+    y: Math.floor(parseInt(el.style.top, 10) - (mainPinSize.height / 2))
   };
-  address.value = `${startCoords.x}, ${startCoords.y}`;
+
+  if (document.querySelector(`.map--faded`)) {
+    address.value = `${startCoords.x}, ${startCoords.y - mainPinArrow}`;
+  } else {
+    address.value = `${startCoords.x}, ${startCoords.y}`;
+  }
+
 };
 
 window.map = {

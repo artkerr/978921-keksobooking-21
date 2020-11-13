@@ -3,7 +3,7 @@
 const adForm = document.querySelector(`.ad-form`);
 const adTitle = adForm.querySelector(`#title`);
 
-window.setFieldStatus = (list, isDisable) => {
+const setFieldStatus = (list, isDisable) => {
   list.forEach((item) => {
     item.disabled = isDisable;
   });
@@ -44,6 +44,7 @@ const setTypePrice = (type) => {
   adPrice.setAttribute(`min`, TypeOptions[type]);
   adPrice.setAttribute(`placeholder`, TypeOptions[type]);
 };
+setTypePrice(TypeOptions.bungalow);
 
 adType.addEventListener(`change`, (evt) => {
   setTypePrice(evt.target.value);
@@ -58,7 +59,7 @@ const roomOptions = {
 const adCapacity = adForm.querySelector(`#capacity`);
 const capacityOptions = adCapacity.querySelectorAll(`option`);
 
-window.setRooms = (roomsQuantity) => {
+const setRooms = (roomsQuantity) => {
   capacityOptions.forEach((option) => {
     option.disabled = true;
   });
@@ -165,3 +166,8 @@ adForm.querySelector(`.ad-form__reset`).addEventListener(`click`, (evt) => {
   evt.preventDefault();
   clearForm();
 });
+
+window.form = {
+  setFieldStatus,
+  setRooms
+};

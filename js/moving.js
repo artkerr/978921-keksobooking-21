@@ -2,12 +2,14 @@
 
 const map = document.querySelector(`.map`);
 const mainPin = map.querySelector(`.map__pin--main`);
+const mainPinArrow = 22;
 const PinLimit = {
-  TOP_Y: 130,
-  BOTTOM_Y: 630,
+  TOP_Y: 130 + ((mainPin.offsetHeight - mainPinArrow) / 2),
+  BOTTOM_Y: 630 + ((mainPin.offsetHeight - mainPinArrow) / 2),
   LEFT_X: 0 - mainPin.offsetWidth / 2,
   RIGHT_X: map.offsetWidth - mainPin.offsetWidth / 2
 };
+
 
 mainPin.addEventListener(`mousedown`, (evt) => {
   evt.preventDefault();

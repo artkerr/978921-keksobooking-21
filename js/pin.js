@@ -22,17 +22,18 @@ const createPin = (pinData) => {
 };
 
 const getPinsList = (pins) => {
-  window.fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-  for (let i = 0; i < pins.length; i++) {
-    window.fragment.appendChild(createPin(pins[i]));
+  for (let i = 0; i < MAX_PINS; i++) {
+    fragment.appendChild(createPin(pins[i]));
   }
-  pinsList.appendChild(window.fragment);
+  pinsList.appendChild(fragment);
 
 };
 
 const clearPins = () => {
   let pins = pinsList.querySelectorAll(`.map__pin`);
+
   for (let i = 1; i < pins.length; i++) {
     let pin = pins[i];
     pin.remove();
@@ -41,7 +42,7 @@ const clearPins = () => {
 
 const updatePinsList = () => {
   clearPins();
-  getPinsList(adsList.filter(window.filter.applyFilter).slice(0, MAX_PINS));
+  getPinsList(adsList.filter(window.filter.applyFilter));
 };
 
 const select = document.querySelector(`.map__filters`);
