@@ -45,7 +45,6 @@
     adPrice.setAttribute(`min`, TypeOptions[type]);
     adPrice.setAttribute(`placeholder`, TypeOptions[type]);
   };
-  setTypePrice(TypeOptions.bungalow);
 
   adType.addEventListener(`change`, (evt) => {
     setTypePrice(evt.target.value);
@@ -152,7 +151,7 @@
   };
 
   adForm.addEventListener(`submit`, (evt) => {
-    window.backend.sendUserData(new FormData(adForm), onSuccess, onError);
+    window.backend.send(new FormData(adForm), onSuccess, onError);
     evt.preventDefault();
   });
 

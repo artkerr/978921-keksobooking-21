@@ -17,7 +17,14 @@
     pinPhoto.alt = pinData.offer.title;
 
     pinButton.addEventListener(`click`, () => {
+      const pinButtons = pinsList.querySelectorAll(`button`);
+
+      pinButtons.forEach((pin) => {
+        pin.classList.remove(`map__pin--active`);
+      });
+
       window.card.renderCard(window.card.createCard(pinData));
+      pinButton.classList.add(`map__pin--active`);
     });
 
     return pinElement;
@@ -33,11 +40,16 @@
   };
 
   const clearPins = () => {
-    const pins = pinsList.querySelectorAll(`.map__pin`);
-
+    let pins = pinsList.querySelectorAll(`.map__pin`);
     for (let i = 1; i < pins.length; i++) {
-      let pin = pins[i];
-      pin.remove();
+      pins[i].remove();
+    }
+  };
+
+  const removePopup = () => {
+    const popup = document.querySelector(`.popup`);
+    if (popup) {
+      popup.remove();
     }
   };
 
@@ -49,6 +61,7 @@
   const select = document.querySelector(`.map__filters`);
 
   select.addEventListener(`change`, () => {
+    removePopup();
     clearPins();
     window.debounce(updatePinsList);
   });

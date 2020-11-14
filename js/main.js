@@ -7,11 +7,10 @@
   const adForm = document.querySelector(`.ad-form`);
   const mapFilters = activeMap.querySelector(`.map__filters`);
   const addFromFieldset = adForm.querySelectorAll(`fieldset`);
-  const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
+  const mapFiltersSelect = mapFilters.querySelectorAll(`*`);
 
   window.form.setFieldStatus(addFromFieldset, true);
   window.form.setFieldStatus(mapFiltersSelect, true);
-  window.map.getPinLocation(mapPin);
 
   mapPin.addEventListener(`click`, window.map.renderPins);
 

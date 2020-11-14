@@ -6,7 +6,7 @@
   const adForm = document.querySelector(`.ad-form`);
   const mapFilters = activeMap.querySelector(`.map__filters`);
   const addFromFieldset = adForm.querySelectorAll(`fieldset`);
-  const mapFiltersSelect = mapFilters.querySelectorAll(`select`);
+  const mapFiltersSelect = mapFilters.querySelectorAll(`*`);
   const address = adForm.querySelector(`#address`);
   const mainPin = pinsList.querySelector(`.map__pin--main`);
   const mainPinArrow = 22;
@@ -20,7 +20,7 @@
     window.form.setFieldStatus(mapFiltersSelect, false);
     adForm.classList.remove(`ad-form--disabled`);
     activeMap.classList.remove(`map--faded`);
-    window.backend.getAdverts(window.pin.successHandler, window.pin.errorHandler);
+    window.backend.load(window.pin.successHandler, window.pin.errorHandler);
   };
 
   const renderPins = (evt) => {
