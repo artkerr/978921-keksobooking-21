@@ -1,78 +1,81 @@
 'use strict';
 
-const map = document.querySelector(`.map`);
-const mainPin = map.querySelector(`.map__pin--main`);
-const mainPinArrow = 22;
-const PinLimit = {
-  TOP_Y: 130 + ((mainPin.offsetHeight - mainPinArrow) / 2),
-  BOTTOM_Y: 630 + ((mainPin.offsetHeight - mainPinArrow) / 2),
-  LEFT_X: 0 - mainPin.offsetWidth / 2,
-  RIGHT_X: map.offsetWidth - mainPin.offsetWidth / 2
-};
-
-
-mainPin.addEventListener(`mousedown`, (evt) => {
-  evt.preventDefault();
-
-  let startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
+(() => {
+  const map = document.querySelector(`.map`);
+  const mainPin = map.querySelector(`.map__pin--main`);
+  const mainPinArrow = 22;
+  const PinLimit = {
+    TOP_Y: 130 + ((mainPin.offsetHeight - mainPinArrow) / 2),
+    BOTTOM_Y: 630 + ((mainPin.offsetHeight - mainPinArrow) / 2),
+    LEFT_X: 0 - mainPin.offsetWidth / 2,
+    RIGHT_X: map.offsetWidth - mainPin.offsetWidth / 2
   };
 
-  let dragged = false;
 
-  const onMouseMove = (moveEvt) => {
-    moveEvt.preventDefault();
-    dragged = true;
+  mainPin.addEventListener(`mousedown`, (evt) => {
+    evt.preventDefault();
 
-    const shift = {
-      x: startCoords.x - moveEvt.clientX,
-      y: startCoords.y - moveEvt.clientY
+    let startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
     };
 
-    startCoords = {
-      x: moveEvt.clientX,
-      y: moveEvt.clientY
-    };
+    let dragged = false;
 
-    let top = mainPin.offsetTop - shift.y;
-    let left = mainPin.offsetLeft - shift.x;
+    const onMouseMove = (moveEvt) => {
+      moveEvt.preventDefault();
+      dragged = true;
 
-    if (top < PinLimit.TOP_Y) {
-      top = PinLimit.TOP_Y;
-    } else if (top > PinLimit.BOTTOM_Y) {
-      top = PinLimit.BOTTOM_Y;
-    }
-    if (left < PinLimit.LEFT_X) {
-      left = PinLimit.LEFT_X;
-    } else if (left > PinLimit.RIGHT_X) {
-      left = PinLimit.RIGHT_X;
-    }
-
-    mainPin.style.top = `${top}px`;
-    mainPin.style.left = `${left}px`;
-
-    window.map.getPinLocation(mainPin);
-  };
-
-  const onMouseUp = (upEvt) => {
-    upEvt.preventDefault();
-
-    document.removeEventListener(`mousemove`, onMouseMove);
-    document.removeEventListener(`mouseup`, onMouseUp);
-
-    if (dragged) {
-      const onClickPreventDefault = (clickEvt) => {
-        clickEvt.preventDefault();
-        mainPin.removeEventListener(`click`, onClickPreventDefault);
+      const shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
       };
-      mainPin.addEventListener(`click`, onClickPreventDefault);
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      let top = mainPin.offsetTop - shift.y;
+      let left = mainPin.offsetLeft - shift.x;
+
+      if (top < PinLimit.TOP_Y) {
+        top = PinLimit.TOP_Y;
+      } else if (top > PinLimit.BOTTOM_Y) {
+        top = PinLimit.BOTTOM_Y;
+      }
+      if (left < PinLimit.LEFT_X) {
+        left = PinLimit.LEFT_X;
+      } else if (left > PinLimit.RIGHT_X) {
+        left = PinLimit.RIGHT_X;
+      }
+
+      mainPin.style.top = `${top}px`;
+      mainPin.style.left = `${left}px`;
+
+      window.map.getPinLocation(mainPin);
+    };
+
+    const onMouseUp = (upEvt) => {
+      upEvt.preventDefault();
+
+      document.removeEventListener(`mousemove`, onMouseMove);
+      document.removeEventListener(`mouseup`, onMouseUp);
+
+      if (dragged) {
+        const onClickPreventDefault = (clickEvt) => {
+          clickEvt.preventDefault();
+          mainPin.removeEventListener(`click`, onClickPreventDefault);
+        };
+        mainPin.addEventListener(`click`, onClickPreventDefault);
+      }
+    };
+
+    if (!map.classList.contains(`map--faded`)) {
+      document.addEventListener(`mousemove`, onMouseMove);
+      document.addEventListener(`mouseup`, onMouseUp);
     }
-  };
 
-  if (!map.classList.contains(`map--faded`)) {
-    document.addEventListener(`mousemove`, onMouseMove);
-    document.addEventListener(`mouseup`, onMouseUp);
-  }
+  });
 
-});
+})();
