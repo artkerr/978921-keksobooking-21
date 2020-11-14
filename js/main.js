@@ -11,7 +11,7 @@
 
   window.form.setFieldStatus(addFromFieldset, true);
   window.form.setFieldStatus(mapFiltersSelect, true);
-
+  window.map.getPinLocation(mapPin);
   mapPin.addEventListener(`click`, window.map.renderPins);
 
   const adRoomNumber = adForm.querySelector(`#room_number`);
