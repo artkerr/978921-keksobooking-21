@@ -155,11 +155,9 @@
     evt.preventDefault();
   });
 
-  const mainPin = document.querySelector(`.map__pin--main`);
-
   const clearForm = () => {
     adForm.reset();
-    window.map.getPinLocation(mainPin);
+    window.map.disablePage();
   };
 
   adForm.querySelector(`.ad-form__reset`).addEventListener(`click`, (evt) => {

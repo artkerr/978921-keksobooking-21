@@ -29,18 +29,19 @@
     return fragment;
   };
 
+  const card = cardTemplate.cloneNode(true);
+  const avatar = card.querySelector(`.popup__avatar`);
+  const title = card.querySelector(`.popup__title`);
+  const address = card.querySelector(`.popup__text--address`);
+  const price = card.querySelector(`.popup__text--price`);
+  const type = card.querySelector(`.popup__type`);
+  const rooms = card.querySelector(`.popup__text--capacity`);
+  const time = card.querySelector(`.popup__text--time`);
+  const features = card.querySelector(`.popup__features`);
+  const description = card.querySelector(`.popup__description`);
+  const photos = card.querySelector(`.popup__photos`);
+
   const createCard = (cardData) => {
-    const card = cardTemplate.cloneNode(true);
-    const avatar = card.querySelector(`.popup__avatar`);
-    const title = card.querySelector(`.popup__title`);
-    const address = card.querySelector(`.popup__text--address`);
-    const price = card.querySelector(`.popup__text--price`);
-    const type = card.querySelector(`.popup__type`);
-    const rooms = card.querySelector(`.popup__text--capacity`);
-    const time = card.querySelector(`.popup__text--time`);
-    const features = card.querySelector(`.popup__features`);
-    const description = card.querySelector(`.popup__description`);
-    const photos = card.querySelector(`.popup__photos`);
 
     avatar.src = cardData.author.avatar;
     title.textContent = cardData.offer.title;
@@ -76,15 +77,19 @@
     document.removeEventListener(`keydown`, onEscButton);
   };
 
-  const renderCard = (card) => {
-    const fragment = document.createDocumentFragment();
-    const popup = map.querySelector(`.popup`);
-
+  const removePopup = () => {
+    const popup = document.querySelector(`.popup`);
     if (popup) {
       popup.remove();
     }
+  };
 
-    fragment.appendChild(card);
+  const renderCard = (item) => {
+    const fragment = document.createDocumentFragment();
+
+    removePopup();
+
+    fragment.appendChild(item);
 
     const closeCard = fragment.querySelector(`.popup__close`);
 
@@ -96,6 +101,7 @@
 
   window.card = {
     createCard,
-    renderCard
+    renderCard,
+    removePopup
   };
 })();

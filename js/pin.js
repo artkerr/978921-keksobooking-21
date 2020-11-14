@@ -40,18 +40,12 @@
   };
 
   const clearPins = () => {
-    let pins = pinsList.querySelectorAll(`.map__pin`);
-    for (let i = 1; i < pins.length; i++) {
-      pins[i].remove();
-    }
+    const pins = pinsList.querySelectorAll(`button[type="button"]`);
+    pins.forEach((item) => {
+      item.remove();
+    });
   };
 
-  const removePopup = () => {
-    const popup = document.querySelector(`.popup`);
-    if (popup) {
-      popup.remove();
-    }
-  };
 
   const updatePinsList = () => {
     clearPins();
@@ -61,7 +55,7 @@
   const select = document.querySelector(`.map__filters`);
 
   select.addEventListener(`change`, () => {
-    removePopup();
+    window.card.removePopup();
     clearPins();
     window.debounce(updatePinsList);
   });

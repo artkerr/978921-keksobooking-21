@@ -15,12 +15,28 @@
     height: mainPin.offsetHeight
   };
 
+
   const setActivePage = () => {
     window.form.setFieldStatus(addFromFieldset, false);
     window.form.setFieldStatus(mapFiltersSelect, false);
     adForm.classList.remove(`ad-form--disabled`);
     activeMap.classList.remove(`map--faded`);
     window.backend.load(window.pin.successHandler, window.pin.errorHandler);
+  };
+
+  const disablePage = () => {
+    window.form.setFieldStatus(addFromFieldset, true);
+    window.form.setFieldStatus(mapFiltersSelect, true);
+    adForm.classList.add(`ad-form--disabled`);
+    activeMap.classList.add(`map--faded`);
+
+    const buttons = pinsList.querySelectorAll(`button[type="button"]`);
+    buttons.forEach((button) => {
+      button.remove();
+    });
+    mainPin.addEventListener(`click`, window.map.renderPins);
+
+    window.card.removePopup();
   };
 
   const renderPins = (evt) => {
@@ -47,8 +63,8 @@
 
   window.map = {
     renderPins,
-    getPinLocation
+    getPinLocation,
+    disablePage
   };
-
 
 })();
