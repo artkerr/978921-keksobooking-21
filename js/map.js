@@ -35,7 +35,7 @@
       button.remove();
     });
     mainPin.addEventListener(`click`, window.map.renderPins);
-
+    getPinLocation(mainPin);
     window.card.removePopup();
   };
 
