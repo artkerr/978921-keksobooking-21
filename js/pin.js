@@ -33,9 +33,10 @@
   const getPinsList = (pins) => {
     const fragment = document.createDocumentFragment();
 
-    for (let i = 0; i < MAX_PINS; i++) {
-      fragment.appendChild(createPin(pins[i]));
-    }
+    pins.forEach((pin) => {
+      fragment.appendChild(createPin(pin));
+    });
+
     pinsList.appendChild(fragment);
   };
 
@@ -48,7 +49,17 @@
 
   const updatePinsList = () => {
     clearPins();
-    getPinsList(adsList.filter(window.filter.applyFilter));
+    const filteredPins = [];
+
+    for (let i = 0; i < adsList.length; i++) {
+      if (filteredPins.length >= MAX_PINS) {
+        break;
+      }
+      if (window.filter.applyFilter(adsList[i])) {
+        filteredPins.push(adsList[i]);
+      }
+    }
+    getPinsList(filteredPins);
   };
 
   const select = document.querySelector(`.map__filters`);

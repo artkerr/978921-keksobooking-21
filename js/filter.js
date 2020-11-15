@@ -9,7 +9,7 @@
     HIGH: 50000
   };
   const rooms = filter.querySelector(`#housing-rooms`);
-  const quests = filter.querySelector(`#housing-guests`);
+  const guests = filter.querySelector(`#housing-guests`);
   const features = filter.querySelector(`#housing-features`);
 
   const typeFilter = (ads) => {
@@ -35,7 +35,7 @@
   };
 
   const questsFilter = (ads) => {
-    return quests.value === `any` ? true : parseInt(quests.value, 10) === ads.offer.quests;
+    return guests.value === `any` ? true : parseInt(guests.value, 10) === ads.offer.guests;
   };
 
   const featuresFilter = (ads) => {
