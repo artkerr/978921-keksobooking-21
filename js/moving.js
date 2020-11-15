@@ -2,6 +2,7 @@
 
 const map = document.querySelector(`.map`);
 const mainPin = map.querySelector(`.map__pin--main`);
+
 const PinLimit = {
   TOP_Y: 130,
   BOTTOM_Y: 630,
@@ -50,7 +51,7 @@ mainPin.addEventListener(`mousedown`, (evt) => {
     mainPin.style.top = `${top}px`;
     mainPin.style.left = `${left}px`;
 
-    window.map.getPinLocation(mainPin);
+    window.map.setPinLocation(left, top + Math.floor(mainPin.offsetHeight / 2));
   };
 
   const onMouseUp = (upEvt) => {
@@ -74,3 +75,4 @@ mainPin.addEventListener(`mousedown`, (evt) => {
   }
 
 });
+

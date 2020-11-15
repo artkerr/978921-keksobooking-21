@@ -7,6 +7,7 @@ const housingTypes = {
   palace: `Дворец`
 };
 const map = document.querySelector(`.map`);
+const filterForm = map.querySelector(`.map__filters-container`);
 const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
 const photoTemplate = document.querySelector(`#photo`).content.querySelector(`img`);
 
@@ -28,18 +29,19 @@ const getPhoto = (cardData) => {
   return fragment;
 };
 
+const card = cardTemplate.cloneNode(true);
+const avatar = card.querySelector(`.popup__avatar`);
+const title = card.querySelector(`.popup__title`);
+const address = card.querySelector(`.popup__text--address`);
+const price = card.querySelector(`.popup__text--price`);
+const type = card.querySelector(`.popup__type`);
+const rooms = card.querySelector(`.popup__text--capacity`);
+const time = card.querySelector(`.popup__text--time`);
+const features = card.querySelector(`.popup__features`);
+const description = card.querySelector(`.popup__description`);
+const photos = card.querySelector(`.popup__photos`);
+
 const createCard = (cardData) => {
-  const card = cardTemplate.cloneNode(true);
-  const avatar = card.querySelector(`.popup__avatar`);
-  const title = card.querySelector(`.popup__title`);
-  const address = card.querySelector(`.popup__text--address`);
-  const price = card.querySelector(`.popup__text--price`);
-  const type = card.querySelector(`.popup__type`);
-  const rooms = card.querySelector(`.popup__text--capacity`);
-  const time = card.querySelector(`.popup__text--time`);
-  const features = card.querySelector(`.popup__features`);
-  const description = card.querySelector(`.popup__description`);
-  const photos = card.querySelector(`.popup__photos`);
 
   avatar.src = cardData.author.avatar;
   title.textContent = cardData.offer.title;
@@ -75,24 +77,30 @@ const onEscButton = (evt) => {
   document.removeEventListener(`keydown`, onEscButton);
 };
 
-const renderCard = (card) => {
-  const fragment = document.createDocumentFragment();
-  const popup = map.querySelector(`.popup`);
-
+const removePopup = () => {
+  const popup = document.querySelector(`.popup`);
   if (popup) {
     popup.remove();
   }
+};
 
-  fragment.appendChild(card);
+const renderCard = (item) => {
+  const fragment = document.createDocumentFragment();
+
+  removePopup();
+
+  fragment.appendChild(item);
+
   const closeCard = fragment.querySelector(`.popup__close`);
 
   closeCard.addEventListener(`click`, closePopup);
   document.addEventListener(`keydown`, onEscButton);
 
-  map.appendChild(fragment);
+  map.insertBefore(fragment, filterForm);
 };
 
 window.card = {
   createCard,
-  renderCard
+  renderCard,
+  removePopup
 };

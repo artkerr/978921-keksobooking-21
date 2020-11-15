@@ -34,4 +34,3 @@ userPhotoInput.addEventListener(`change`, () => {
 housePhotoInput.addEventListener(`change`, () => {
   setPhoto(housePhotoInput, housePhotoPreview);
 });
-

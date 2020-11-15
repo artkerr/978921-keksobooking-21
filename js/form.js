@@ -3,7 +3,7 @@
 const adForm = document.querySelector(`.ad-form`);
 const adTitle = adForm.querySelector(`#title`);
 
-window.setFieldStatus = (list, isDisable) => {
+const setFieldStatus = (list, isDisable) => {
   list.forEach((item) => {
     item.disabled = isDisable;
   });
@@ -58,7 +58,7 @@ const roomOptions = {
 const adCapacity = adForm.querySelector(`#capacity`);
 const capacityOptions = adCapacity.querySelectorAll(`option`);
 
-window.setRooms = (roomsQuantity) => {
+const setRooms = (roomsQuantity) => {
   capacityOptions.forEach((option) => {
     option.disabled = true;
   });
@@ -150,18 +150,21 @@ const onError = () => {
 };
 
 adForm.addEventListener(`submit`, (evt) => {
-  window.backend.sendUserData(new FormData(adForm), onSuccess, onError);
+  window.backend.send(new FormData(adForm), onSuccess, onError);
   evt.preventDefault();
 });
 
-const mainPin = document.querySelector(`.map__pin--main`);
-
 const clearForm = () => {
   adForm.reset();
-  window.map.getPinLocation(mainPin);
+  window.map.disablePage();
 };
 
 adForm.querySelector(`.ad-form__reset`).addEventListener(`click`, (evt) => {
   evt.preventDefault();
   clearForm();
 });
+
+window.form = {
+  setFieldStatus,
+  setRooms
+};

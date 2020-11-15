@@ -3,12 +3,12 @@
 const filter = document.querySelector(`.map__filters`);
 const type = filter.querySelector(`#housing-type`);
 const price = filter.querySelector(`#housing-price`);
-const priceValue = {
+const PriceValue = {
   LOW: 10000,
   HIGH: 50000
 };
 const rooms = filter.querySelector(`#housing-rooms`);
-const quests = filter.querySelector(`#housing-guests`);
+const guests = filter.querySelector(`#housing-guests`);
 const features = filter.querySelector(`#housing-features`);
 
 const typeFilter = (ads) => {
@@ -19,11 +19,11 @@ const priceFilter = (ads) => {
   if (price.value === `any`) {
     return true;
   } else if (price.value === `low`) {
-    return ads.offer.price < priceValue.LOW;
+    return ads.offer.price < PriceValue.LOW;
   } else if (price.value === `middle`) {
-    return ads.offer.price > priceValue.LOW && ads.offer.price <= priceValue.HIGH;
+    return ads.offer.price > PriceValue.LOW && ads.offer.price <= PriceValue.HIGH;
   } else if (price.value === `high`) {
-    return ads.offer.price >= priceValue.HIGH;
+    return ads.offer.price >= PriceValue.HIGH;
   } else {
     return false;
   }
@@ -34,7 +34,7 @@ const roomsFilter = (ads) => {
 };
 
 const questsFilter = (ads) => {
-  return quests.value === `any` ? true : parseInt(quests.value, 10) === ads.offer.quests;
+  return guests.value === `any` ? true : parseInt(guests.value, 10) === ads.offer.guests;
 };
 
 const featuresFilter = (ads) => {

@@ -9,44 +9,62 @@ const createPin = (pinData) => {
   const pinElement = advertTemplate.cloneNode(true);
   const pinButton = pinElement.querySelector(`.map__pin`);
   const pinPhoto = pinElement.querySelector(`img`);
+
   pinButton.style.left = `${pinData.location.x - pinButton.offsetWidth}px`;
   pinButton.style.top = `${pinData.location.y - pinButton.offsetHeight}px`;
   pinPhoto.src = pinData.author.avatar;
   pinPhoto.alt = pinData.offer.title;
 
   pinButton.addEventListener(`click`, () => {
+    const pinButtons = pinsList.querySelectorAll(`button`);
+
+    pinButtons.forEach((pin) => {
+      pin.classList.remove(`map__pin--active`);
+    });
+
     window.card.renderCard(window.card.createCard(pinData));
+    pinButton.classList.add(`map__pin--active`);
   });
 
   return pinElement;
 };
 
 const getPinsList = (pins) => {
-  window.fragment = document.createDocumentFragment();
+  const fragment = document.createDocumentFragment();
 
-  for (let i = 0; i < pins.length; i++) {
-    window.fragment.appendChild(createPin(pins[i]));
-  }
-  pinsList.appendChild(window.fragment);
+  pins.forEach((pin) => {
+    fragment.appendChild(createPin(pin));
+  });
 
+  pinsList.appendChild(fragment);
 };
 
 const clearPins = () => {
-  let pins = pinsList.querySelectorAll(`.map__pin`);
-  for (let i = 1; i < pins.length; i++) {
-    let pin = pins[i];
-    pin.remove();
-  }
+  const pins = pinsList.querySelectorAll(`button[type="button"]`);
+  pins.forEach((item) => {
+    item.remove();
+  });
 };
 
 const updatePinsList = () => {
   clearPins();
-  getPinsList(adsList.filter(window.filter.applyFilter).slice(0, MAX_PINS));
+  const filteredPins = [];
+
+  for (let i = 0; i < adsList.length; i++) {
+    if (filteredPins.length >= MAX_PINS) {
+      break;
+    }
+    if (window.filter.applyFilter(adsList[i])) {
+      filteredPins.push(adsList[i]);
+    }
+  }
+  getPinsList(filteredPins);
 };
 
 const select = document.querySelector(`.map__filters`);
 
 select.addEventListener(`change`, () => {
+  window.card.removePopup();
   clearPins();
   window.debounce(updatePinsList);
 });
