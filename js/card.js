@@ -8,6 +8,7 @@
     palace: `Дворец`
   };
   const map = document.querySelector(`.map`);
+  const filterForm = map.querySelector(`.map__filters-container`);
   const cardTemplate = document.querySelector(`#card`).content.querySelector(`.map__card`);
   const photoTemplate = document.querySelector(`#photo`).content.querySelector(`img`);
 
@@ -96,7 +97,7 @@
     closeCard.addEventListener(`click`, closePopup);
     document.addEventListener(`keydown`, onEscButton);
 
-    map.appendChild(fragment);
+    map.insertBefore(fragment, filterForm);
   };
 
   window.card = {
