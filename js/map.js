@@ -15,6 +15,11 @@
     height: mainPin.offsetHeight
   };
 
+  const mainPinStartChords = {
+    x: 537,
+    y: 320
+  };
+
 
   const setActivePage = () => {
     window.form.setFieldStatus(addFromFieldset, false);
@@ -35,7 +40,9 @@
       button.remove();
     });
     mainPin.addEventListener(`click`, window.map.renderPins);
-    getPinLocation(mainPin);
+    address.value = `${mainPinStartChords.x}, ${mainPinStartChords.y}`;
+    mainPin.style.left = `${mainPinStartChords.x}px`;
+    mainPin.style.top = `${mainPinStartChords.y}px`;
     window.card.removePopup();
   };
 
@@ -58,7 +65,6 @@
     } else {
       address.value = `${startCoords.x}, ${startCoords.y}`;
     }
-
   };
 
   window.map = {

@@ -46,7 +46,6 @@
     });
   };
 
-
   const updatePinsList = () => {
     clearPins();
     getPinsList(adsList.filter(window.filter.applyFilter));
