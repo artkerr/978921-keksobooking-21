@@ -10,16 +10,11 @@
   const address = adForm.querySelector(`#address`);
   const mainPin = pinsList.querySelector(`.map__pin--main`);
   const mainPinArrow = 22;
-  const mainPinSize = {
-    width: mainPin.offsetWidth,
-    height: mainPin.offsetHeight
-  };
 
   const mainPinStartChords = {
-    x: 537,
-    y: 320
+    x: 570,
+    y: 375
   };
-
 
   const setActivePage = () => {
     window.form.setFieldStatus(addFromFieldset, false);
@@ -49,27 +44,23 @@
   const renderPins = (evt) => {
     window.util.isMouseDown(evt, () => {
       setActivePage();
-      getPinLocation(mainPin);
+      setPinLocation();
       mainPin.removeEventListener(`click`, window.map.renderPins);
     });
   };
 
-  const getPinLocation = (el) => {
-    const startCoords = {
-      x: Math.floor(parseInt(el.style.left, 10) - (mainPinSize.width / 2)),
-      y: Math.floor(parseInt(el.style.top, 10) - (mainPinSize.height / 2))
-    };
+  const setPinLocation = (x = mainPinStartChords.x, y = mainPinStartChords.y) => {
 
-    if (document.querySelector(`.map--faded`)) {
-      address.value = `${startCoords.x}, ${startCoords.y - mainPinArrow}`;
+    if (activeMap.classList.contains(`map--faded`)) {
+      address.value = `${x}, ${y}`;
     } else {
-      address.value = `${startCoords.x}, ${startCoords.y}`;
+      address.value = `${x}, ${y + Math.floor(mainPin.offsetHeight / 2) + mainPinArrow}`;
     }
   };
 
   window.map = {
     renderPins,
-    getPinLocation,
+    setPinLocation,
     disablePage
   };
 

@@ -5,8 +5,8 @@
   const mainPin = map.querySelector(`.map__pin--main`);
 
   const PinLimit = {
-    TOP_Y: 130 + Math.ceil(mainPin.offsetHeight / 2),
-    BOTTOM_Y: 630 + Math.ceil(mainPin.offsetHeight / 2),
+    TOP_Y: 130,
+    BOTTOM_Y: 630,
     LEFT_X: 0 - mainPin.offsetWidth / 2,
     RIGHT_X: map.offsetWidth - mainPin.offsetWidth / 2
   };
@@ -52,7 +52,7 @@
       mainPin.style.top = `${top}px`;
       mainPin.style.left = `${left}px`;
 
-      window.map.getPinLocation(mainPin);
+      window.map.setPinLocation(left, top);
     };
 
     const onMouseUp = (upEvt) => {
