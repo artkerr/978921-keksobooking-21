@@ -68,12 +68,14 @@ const createCard = (cardData) => {
 const closePopup = (evt) => {
   const popup = map.querySelector(`.popup`);
   window.util.isMouseDown(evt, () => popup.remove());
+  window.pin.removeActiveClass();
   document.removeEventListener(`keydown`, onEscButton);
 };
 
 const onEscButton = (evt) => {
   const popup = map.querySelector(`.popup`);
   window.util.isEscEvt(evt, () => popup.remove());
+  window.pin.removeActiveClass();
   document.removeEventListener(`keydown`, onEscButton);
 };
 

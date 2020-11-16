@@ -15,7 +15,6 @@ const createPin = (pinData) => {
   pinPhoto.src = pinData.author.avatar;
   pinPhoto.alt = pinData.offer.title;
 
-
   pinButton.addEventListener(`click`, () => {
 
     removeActiveClass();
@@ -88,5 +87,6 @@ const errorHandler = (errorMessage) => {
 window.pin = {
   updatePinsList,
   successHandler,
-  errorHandler
+  errorHandler,
+  removeActiveClass
 };
