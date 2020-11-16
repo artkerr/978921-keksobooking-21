@@ -34,3 +34,8 @@ userPhotoInput.addEventListener(`change`, () => {
 housePhotoInput.addEventListener(`change`, () => {
   setPhoto(housePhotoInput, housePhotoPreview);
 });
+
+window.resetPhoto = (preview) => {
+  preview.src = `img/muffin-grey.svg`;
+};
+

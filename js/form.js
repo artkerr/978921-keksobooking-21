@@ -156,8 +156,13 @@ adForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
 });
 
+const userPhotoPreview = adForm.querySelector(`.ad-form-header__preview img`);
+const housePhotoPreview = adForm.querySelector(`.ad-form__photo img`);
+
 const clearForm = () => {
   adForm.reset();
+  window.resetPhoto(userPhotoPreview);
+  window.resetPhoto(housePhotoPreview);
   window.map.disablePage();
 };
 
