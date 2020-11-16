@@ -58,6 +58,7 @@ const roomOptions = {
 const adCapacity = adForm.querySelector(`#capacity`);
 const capacityOptions = adCapacity.querySelectorAll(`option`);
 
+
 const setRooms = (roomsQuantity) => {
   capacityOptions.forEach((option) => {
     option.disabled = true;
@@ -72,6 +73,7 @@ const setRooms = (roomsQuantity) => {
     });
   });
 };
+
 
 const adTimeIn = adForm.querySelector(`#timein`);
 const timeInOptions = adTimeIn.querySelectorAll(`option`);

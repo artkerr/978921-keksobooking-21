@@ -15,18 +15,25 @@ const createPin = (pinData) => {
   pinPhoto.src = pinData.author.avatar;
   pinPhoto.alt = pinData.offer.title;
 
-  pinButton.addEventListener(`click`, () => {
-    const pinButtons = pinsList.querySelectorAll(`button`);
 
-    pinButtons.forEach((pin) => {
-      pin.classList.remove(`map__pin--active`);
-    });
+  pinButton.addEventListener(`click`, () => {
+
+    removeActiveClass();
 
     window.card.renderCard(window.card.createCard(pinData));
     pinButton.classList.add(`map__pin--active`);
   });
 
   return pinElement;
+};
+
+const removeActiveClass = () => {
+  const pinButtons = pinsList.querySelectorAll(`button`);
+  pinButtons.forEach((pin) => {
+    if (pin.classList.contains(`map__pin--active`)) {
+      pin.classList.remove(`map__pin--active`);
+    }
+  });
 };
 
 const getPinsList = (pins) => {
