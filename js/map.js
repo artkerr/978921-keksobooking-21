@@ -53,7 +53,7 @@ const setPinLocation = (x = mainPinStartChords.x, y = mainPinStartChords.y) => {
   if (activeMap.classList.contains(`map--faded`)) {
     address.value = `${x}, ${y}`;
   } else {
-    address.value = `${x}, ${y + Math.floor(mainPin.offsetHeight / 2) + mainPinArrow}`;
+    address.value = `${x}, ${y + Math.ceil(mainPin.offsetHeight / 2) + mainPinArrow}`;
   }
 };
 
