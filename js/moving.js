@@ -3,11 +3,11 @@
 const map = document.querySelector(`.map`);
 const mainPin = map.querySelector(`.map__pin--main`);
 const mainPinArrow = 22;
-const mainPinASize = 62;
+const mainPinSize = 62;
 
 const PinLimit = {
-  TOP_Y: 130 - mainPinASize - mainPinArrow,
-  BOTTOM_Y: 630 - mainPinASize - mainPinArrow,
+  TOP_Y: 130 - mainPinSize - mainPinArrow,
+  BOTTOM_Y: 630 - mainPinSize - mainPinArrow,
   LEFT_X: 0 - mainPin.offsetWidth / 2,
   RIGHT_X: map.offsetWidth - mainPin.offsetWidth / 2
 };
@@ -53,7 +53,7 @@ mainPin.addEventListener(`mousedown`, (evt) => {
     mainPin.style.top = `${top}px`;
     mainPin.style.left = `${left}px`;
 
-    window.map.setPinLocation(left, top + Math.floor(mainPinASize / 2));
+    window.map.setPinLocation(left, top + Math.floor(mainPinSize / 2));
   };
 
   const onMouseUp = (upEvt) => {
