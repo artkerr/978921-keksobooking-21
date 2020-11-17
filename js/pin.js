@@ -29,10 +29,11 @@ const createPin = (pinData) => {
 const removeActiveClass = () => {
   const pinButtons = pinsList.querySelectorAll(`button`);
   pinButtons.forEach((pin) => {
-    if (pin.classList.contains(`map__pin--active`)) {
+    if (pinsList.querySelector(`.map__pin--active`)) {
       pin.classList.remove(`map__pin--active`);
     }
   });
+
 };
 
 const getPinsList = (pins) => {
