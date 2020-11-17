@@ -9,11 +9,10 @@ const mapFiltersSelect = mapFilters.querySelectorAll(`*`);
 const address = adForm.querySelector(`#address`);
 const mainPin = pinsList.querySelector(`.map__pin--main`);
 const mainPinArrow = 22;
-const mainPinHeight = 62;
 
 const mainPinStartChords = {
-  x: 570,
-  y: 375
+  x: 570 + Math.floor(mainPin.offsetHeight / 2),
+  y: 375 + Math.floor(mainPin.offsetWidth / 2)
 };
 
 const setActivePage = () => {
@@ -54,7 +53,7 @@ const setPinLocation = (x = mainPinStartChords.x, y = mainPinStartChords.y) => {
   if (activeMap.classList.contains(`map--faded`)) {
     address.value = `${x}, ${y}`;
   } else {
-    address.value = `${x}, ${y + mainPinHeight + mainPinArrow}`;
+    address.value = `${x}, ${y + Math.ceil(mainPin.offsetHeight / 2) + mainPinArrow}`;
   }
 };
 
